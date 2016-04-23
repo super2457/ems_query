@@ -1,0 +1,11 @@
+{
+  "name": "ems",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cls && phantomjs ems.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
