@@ -5,7 +5,7 @@ var server = require('webserver').create();
 console.log('The default user agent is ' + page.settings.userAgent);
 page.settings.userAgent = 'SpecialAgent';
 
-    var listening = server.listen('192.168.2.158:8083', function (request, response) {
+    var listening = server.listen(8083, function (request, response) {
         console.log("HTTP REQUEST");
         console.log(JSON.stringify(request, null, 4));
         console.log("======================= Split line =======================");
@@ -38,13 +38,16 @@ page.settings.userAgent = 'SpecialAgent';
                 var ems = request.post.substring(4,17);
                 console.log(ems + ' :' + ems.length);
                 page.open('http://q1.sto.cn/chaxun/result?express_no=' + ems, function(status) {
+                    console.log(status);
                     if (status !== 'success') {
                         console.log('Unable to access network');
+                        response.write('服务器繁忙');
+                        response.close();
+
                     } else {
                         var ua = page.evaluate(function() {
-                            return $('.right-box').text()
+                            return document.getElementsByClassName('right-box')[0].innerHTML
                         });
-                        console.log(ua);
 
                         response.write(ua);
                         response.close();
